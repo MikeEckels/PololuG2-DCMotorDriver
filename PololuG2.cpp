@@ -20,7 +20,7 @@ void PololuG2::Begin() {
 	pinMode(this->pwmPin, OUTPUT);
 	pinMode(this->dirPin, OUTPUT);
 	pinMode(this->sleepPin, OUTPUT);
-	pinMode(this->faultPin, OUTPUT);
+	pinMode(this->faultPin, INPUT_PULLUP);
 	pinMode(this->currentSensePin, INPUT);
 	TCCR1B = TCCR1B & B11111000 | B00000001; // 31.6Khz PWM
 	CalibrateCurrent();
@@ -42,14 +42,14 @@ bool PololuG2::GetDirection() {
 	return this->direction;
 }
 
-unsigned int PololuG2::GetCurrentA() {
-	return ((unsigned int)(GetCurrentMa() / 1000));
+float PololuG2::GetCurrentA() {
+	return ((float)((float)GetCurrentMa() / 1000.0f));
 }
 
-unsigned int PololuG2::GetCurrentMa() {
+float PololuG2::GetCurrentMa() {
 	unsigned int currentMa = (GetRawCurrent() - this->currentOffset);
 	//5V/ADC resolution/G2 resolution
-	return ((unsigned int)((currentMa * (5000000/1024))/20));
+	return ((float)(((float)currentMa * (5000000.0f/1024.0f))/20.0f));
 }
 
 unsigned int PololuG2::GetRawCurrent() {

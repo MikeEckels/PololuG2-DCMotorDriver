@@ -27,8 +27,8 @@ public:
 
 	bool GetFault();
 	bool GetDirection();
-	unsigned int GetCurrentA();
-	unsigned int GetCurrentMa();
+	float GetCurrentA();
+	float GetCurrentMa();
 	
 	void SetBrake();
 	void SetDirection(bool dir);

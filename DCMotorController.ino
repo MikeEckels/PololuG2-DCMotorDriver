@@ -9,6 +9,7 @@ void setup()
 	motorDriver.Begin();
 	motorDriver.Sleep();
 	//motorDriver.SetSpeedRpm(4000);
+	//motorDriver.SetDirection(1);
 	motorDriver.SetVoltage(0);
 	motorDriver.Wake();
 }
