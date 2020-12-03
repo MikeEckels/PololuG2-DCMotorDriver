@@ -1,5 +1,6 @@
 #pragma once
 #include "Arduino.h"
+#include "KalmanFilter.h"
 
 class PololuG2 {
 private:
@@ -16,6 +17,7 @@ private:
 
 	void CalibrateCurrent();
 	unsigned int GetRawCurrent();
+	KalmanFilter currentKF = KalmanFilter(0.01f, 25);
 
 public:
 	PololuG2();
@@ -32,6 +34,6 @@ public:
 	
 	void SetBrake();
 	void SetDirection(bool dir);
-	void SetVoltage(char voltage);
+	void SetVoltage(short voltage);
 	void SetSpeedRpm(int RPM);
 };

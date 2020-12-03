@@ -22,7 +22,8 @@ void PololuG2::Begin() {
 	pinMode(this->sleepPin, OUTPUT);
 	pinMode(this->faultPin, INPUT_PULLUP);
 	pinMode(this->currentSensePin, INPUT);
-	TCCR1B = TCCR1B & B11111000 | B00000001; // 31.6Khz PWM
+	analogWriteFrequency(this->pwmPin, 32000);//Teensy4.0 32Khz PWM
+	//TCCR1B = TCCR1B & B11111000 | B00000001; //Uno 31.6Khz PWM
 	CalibrateCurrent();
 }
 
@@ -53,7 +54,7 @@ float PololuG2::GetCurrentMa() {
 }
 
 unsigned int PololuG2::GetRawCurrent() {
-	return analogRead(this->currentSensePin);
+	return currentKF.Filter(analogRead(this->currentSensePin));
 }
 
 void PololuG2::SetDirection(bool dir) {
@@ -61,7 +62,7 @@ void PololuG2::SetDirection(bool dir) {
 	digitalWrite(this->dirPin, this->direction);
 }
 
-void PololuG2::SetVoltage(char voltage) {
+void PololuG2::SetVoltage(short voltage) {
 	this->direction = (voltage >= 0) ? 1 : 0;
 	voltage = constrain(voltage, -this->MaxInputVoltage, this->MaxInputVoltage);
 	voltage = (voltage < 0) ? -voltage : voltage;
