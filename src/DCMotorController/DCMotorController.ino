@@ -4,7 +4,7 @@ PololuG2 motorDriver;
 
 void setup()
 {
-	Serial.begin(9600);
+	Serial.begin(115200);
 
 	motorDriver.Begin();
 	motorDriver.Sleep();
