@@ -22,14 +22,16 @@ void loop()
 		int dir = Serial.parseInt();
 
 		if (speedType) {
-			Serial.println("Setting RPM");
+			Serial.print("Setting RPM: ");
+      Serial.println(speed);
 			motorDriver.Sleep();
 			motorDriver.SetSpeedRpm(speed);
 			motorDriver.SetDirection((bool)dir);
 			motorDriver.Wake();
 		}
 		else {
-			Serial.println("Setting Voltage");
+			Serial.print("Setting Voltage: ");
+      Serial.println(speed);
 			motorDriver.SetVoltage((short)speed);
 		}
 	}
